@@ -35,16 +35,38 @@
 Chrome-Agent Bridge 消除了这个摩擦。**在浏览器中点击元素 → AI 助手立刻获得完整信息**：HTML 结构、所有 CSS 样式、截图和完整元数据。
 
 ## 使用示例
+### 视频演示示例
+<video controls src="docs/3月3日.mp4" title="Title"></video>
 
+### 截图示例
+1. 浏览器插件选中元素：打开插件点击-开始选择-选中对应元素-提示【元素已采集】
+![alt text](docs/image-2.png)
+![alt text](docs/image.png)
+![alt text](docs/image-1.png)
+
+2. 获取选中元素信息
+![alt text](docs/image-3.png)
+
+3. 修改选中的组件和元素
+![alt text](docs/image-4.png)
+
+4. 复刻选中的其他网页样式
+![alt text](docs/image-5.png)
+
+### 提示词示例
 ```
-你:    我喜欢这个网页上的卡片组件，帮我用 React + Tailwind 实现一个类似的。
+你:    /chrome-agent-bridge 将现在选中的样式修改为：111111
+Agent: (自动调用 mcp 获取 HTML/CSS/截图)
+       根据采集到的元素信息，自定定位当前代码文件位置，自动执行代码修改任务
 
-Agent: (自动调用 get_selected_element，获取完整 HTML/CSS/截图)
+你:    /chrome-agent-bridge 我喜欢这个网页上的卡片组件，帮我用 React + Tailwind 实现一个类似的。
+
+Agent: (自动调用 mcp 获取 完整 HTML/CSS/截图)
        根据采集到的元素信息，这是一个带阴影的圆角卡片，以下是实现代码...
 ```
 
 ```
-你:    帮我看看刚才选中的按钮用了哪些 CSS 样式
+你:    /chrome-agent-bridge 帮我看看刚才选中的按钮用了哪些 CSS 样式
 
 Agent: (自动调用 get_element_styles)
        这个按钮的主要样式包括 border-radius: 8px, background: linear-gradient(...)...
@@ -135,6 +157,8 @@ MCP Server 由 IDE 自动管理，不需要手动启动。你只需要告诉 IDE
   }
 }
 ```
+配置成功示例：
+![alt text](docs/image6.png)
 
 **Kiro** — 编辑 `~/.kiro/settings/mcp.json`：
 
@@ -214,16 +238,16 @@ npm install
 在项目根目录创建文件 `.cursor/commands/chrome-agent-bridge.md`：
 
 ```markdown
-# 使用 Chrome Agent Bridge 复刻当前选中元素
+请调用 **chrome-agent-bridge** MCP 获取最新选中元素信息：
 
-请通过 **chrome-agent-bridge** MCP 完成以下流程：
-
-1. **获取当前选中信息**
+1. **当前选中信息**  
    - 元素的 HTML 结构
    - 样式（styles）
    - 截图（screenshot，base64）
+根据获取的元素dom、样式定位代码位置；
+根据获取的元素dom、样式、截图参考UI；
 
-2. **若没有选中元素**
+2. **若没有选中元素**  
    提示用户先去浏览器选中元素再操作
 
 请直接执行上述步骤，无需再向我确认。
