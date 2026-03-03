@@ -100,7 +100,7 @@ Agent: (自动调用 get_element_styles)
 
 ### 第一步：安装 Chrome 扩展
 
-1. 从 [Releases](https://github.com/user/chrome-agent-bridge/releases) 页面下载最新的 `chrome-extension.zip`
+1. 从仓库根目录下载 [`chrome-extension-v0.1.0.zip`](https://github.com/HaiDong-Once/chrome-agent-bridge/blob/main/chrome-extension-v0.1.0.zip)
 2. 解压到本地任意目录（如 `~/chrome-agent-bridge-extension/`）
 3. 打开 Chrome，地址栏输入 `chrome://extensions/`
 4. 开启右上角的 **「开发者模式」** 开关
@@ -156,7 +156,7 @@ MCP Server 由 IDE 自动管理，不需要手动启动。你只需要告诉 IDE
 <details>
 <summary><strong>方式二：下载到本地，使用本地路径</strong></summary>
 
-1. 从 [Releases](https://github.com/user/chrome-agent-bridge/releases) 页面下载最新的 `mcp-server-vX.X.X.zip`
+1. 从仓库根目录下载 [`mcp-server-v0.1.2.zip`](https://github.com/HaiDong-Once/chrome-agent-bridge/blob/main/mcp-server-v0.1.2.zip)
 2. 解压到本地任意目录（如 `~/chrome-agent-bridge-server/`）
 3. 在解压目录中安装依赖：
 
@@ -249,7 +249,7 @@ npm install
 ### 克隆与构建
 
 ```bash
-git clone https://github.com/user/chrome-agent-bridge.git
+git clone https://github.com/HaiDong-Once/chrome-agent-bridge.git
 cd chrome-agent-bridge
 pnpm install
 pnpm build
