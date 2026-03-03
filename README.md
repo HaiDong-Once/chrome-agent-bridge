@@ -5,15 +5,15 @@
 <h1 align="center">Chrome-Agent Bridge</h1>
 
 <p align="center">
-  <strong>🔗 打通 Chrome 浏览器与 AI Agent IDE 的桥梁 — 点击网页元素，AI 助手直接获取完整信息。</strong>
+  <strong>打通 Chrome 浏览器与 AI Agent IDE 的桥梁 — 点击网页元素，AI 助手直接获取完整信息。</strong>
 </p>
 
 <p align="center">
-  <a href="#-为什么需要它">为什么需要</a> •
-  <a href="#-普通用户快速上手">普通用户</a> •
-  <a href="#-开发者指南">开发者</a> •
-  <a href="#-mcp-工具参考">MCP 工具</a> •
-  <a href="#-常见问题">FAQ</a>
+  <a href="#为什么需要它">为什么需要</a> •
+  <a href="#普通用户快速上手">普通用户</a> •
+  <a href="#开发者指南">开发者</a> •
+  <a href="#mcp-工具参考">MCP 工具</a> •
+  <a href="#常见问题">FAQ</a>
 </p>
 
 <p align="center">
@@ -25,16 +25,16 @@
 
 ---
 
-## 💡 为什么需要它？
+## 为什么需要它？
 
 使用 AI 编程助手（Cursor、Kiro 等）时，浏览器和 IDE 之间存在明显的断层：
 
-- 🎨 **"照这个做"** — 看到一个漂亮的网页组件，需要手动复制 HTML/CSS 粘贴到聊天窗口，信息丢失、上下文不完整。
-- 🐛 **"修这个样式"** — 在浏览器发现样式问题，要打开 DevTools → 复制选择器 → 切到 IDE → 搜索文件 → 再跟 AI 解释。
+- **"照这个做"** — 看到一个漂亮的网页组件，需要手动复制 HTML/CSS 粘贴到聊天窗口，信息丢失、上下文不完整。
+- **"修这个样式"** — 在浏览器发现样式问题，要打开 DevTools → 复制选择器 → 切到 IDE → 搜索文件 → 再跟 AI 解释。
 
 Chrome-Agent Bridge 消除了这个摩擦。**在浏览器中点击元素 → AI 助手立刻获得完整信息**：HTML 结构、所有 CSS 样式、截图和完整元数据。
 
-## 💬 使用示例
+## 使用示例
 
 ```
 你:    我喜欢这个网页上的卡片组件，帮我用 React + Tailwind 实现一个类似的。
@@ -50,18 +50,18 @@ Agent: (自动调用 get_element_styles)
        这个按钮的主要样式包括 border-radius: 8px, background: linear-gradient(...)...
 ```
 
-## ✨ 功能特性
+## 功能特性
 
-- 🖱️ **点击即采集** — 鼠标悬停预览高亮，点击自动采集，无需打开 DevTools
-- 📸 **自动截图** — 裁剪选中元素区域的截图
-- 🎨 **完整 CSS 提取** — 计算样式、匹配的 CSS 规则、媒体查询、样式来源
-- 🧬 **完整 HTML 和元数据** — outerHTML、DOM 路径、class、属性，一应俱全
-- 🔌 **MCP 协议集成** — 兼容所有支持 MCP 的 IDE（Cursor、Kiro 等）
-- 🪶 **零依赖 HTTP 服务** — 轻量 Node.js 原生实现，无框架依赖
-- 🔒 **仅限本地通信** — 所有数据在本机流转，不会发送到外部网络
-- 💾 **纯内存存储** — 不写入磁盘，最多缓存 20 条记录，自动淘汰最旧数据
+- **点击即采集** — 鼠标悬停预览高亮，点击自动采集，无需打开 DevTools
+- **自动截图** — 裁剪选中元素区域的截图
+- **完整 CSS 提取** — 计算样式、匹配的 CSS 规则、媒体查询、样式来源
+- **完整 HTML 和元数据** — outerHTML、DOM 路径、class、属性，一应俱全
+- **MCP 协议集成** — 兼容所有支持 MCP 的 IDE（Cursor、Kiro 等）
+- **零依赖 HTTP 服务** — 轻量 Node.js 原生实现，无框架依赖
+- **仅限本地通信** — 所有数据在本机流转，不会发送到外部网络
+- **纯内存存储** — 不写入磁盘，最多缓存 20 条记录，自动淘汰最旧数据
 
-## 🏗️ 工作原理
+## 工作原理
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
@@ -88,7 +88,7 @@ Agent: (自动调用 get_element_styles)
 
 ---
 
-## 📦 普通用户快速上手
+## 普通用户快速上手
 
 > 不需要任何开发经验，按以下步骤操作即可使用。
 
@@ -106,9 +106,9 @@ Agent: (自动调用 get_element_styles)
 4. 开启右上角的 **「开发者模式」** 开关
 5. 点击 **「加载已解压的扩展程序」**
 6. 选择刚才解压的文件夹
-7. 扩展图标出现在浏览器工具栏中 ✅
+7. 扩展图标出现在浏览器工具栏中 
 
-> 💡 后续版本将发布到 Chrome Web Store，届时可直接从商店安装，无需开发者模式。
+> 后续版本将发布到 Chrome Web Store，届时可直接从商店安装，无需开发者模式。
 
 > 如果使用 Edge 浏览器，访问 `edge://extensions/` 执行相同操作。
 
@@ -195,19 +195,19 @@ npm install
 }
 ```
 
-> ⚠️ 将路径替换为你本机的实际解压路径。
+> 将路径替换为你本机的实际解压路径。
 
 </details>
 
 ### 第三步：开始使用
 
 1. **确认连接** — 点击浏览器工具栏的扩展图标，查看状态指示器：
-   - 🟢 绿色 = MCP Server 在线，可以使用
-   - ⚪ 灰色 = MCP Server 离线，请确认 IDE 已启动
+   - 绿色 = MCP Server 在线，可以使用
+   - 灰色 = MCP Server 离线，请确认 IDE 已启动
 2. **采集元素** — 点击「开始选择」→ 鼠标悬停元素会高亮 → 点击目标元素自动采集
 3. **让 AI 使用** — 切到 IDE，直接告诉 AI 你想做什么，它会自动获取采集的数据
 
-### 🎯 进阶：配置 Cursor Command 精准触发
+### 进阶：配置 Cursor Command 精准触发
 
 在 Cursor 中，你可以配置一个自定义命令，确保 AI 每次都准确调用 Chrome-Agent Bridge 的 MCP 工具，而不需要你手动描述。
 
@@ -231,11 +231,11 @@ npm install
 
 配置后，在 Cursor 聊天窗口输入 `/chrome-agent-bridge` 即可一键触发完整的采集 + 复刻流程。
 
-> 💡 你也可以在 Cursor 的 Rules 中添加类似的指令，让 AI 在特定场景下自动使用 Chrome-Agent Bridge。
+> 你也可以在 Cursor 的 Rules 中添加类似的指令，让 AI 在特定场景下自动使用 Chrome-Agent Bridge。
 
 ---
 
-## 🛠️ 开发者指南
+## 开发者指南
 
 > 适合想要参与开发、自行构建或二次开发的开发者。
 
@@ -315,7 +315,7 @@ pnpm build
 
 </details>
 
-> ⚠️ 将路径替换为你本机项目的实际绝对路径。
+> 将路径替换为你本机项目的实际绝对路径。
 
 ### 配置 Cursor Command / Rules
 
@@ -404,7 +404,7 @@ chrome-agent-bridge/
 
 ---
 
-## 🔧 MCP 工具参考
+## MCP 工具参考
 
 配置完成后，AI 助手可以使用以下工具：
 
@@ -430,7 +430,7 @@ chrome-agent-bridge/
 
 ---
 
-## ❓ 常见问题
+## 常见问题
 
 <details>
 <summary><strong>扩展显示 "MCP Server 离线"？</strong></summary>
@@ -499,7 +499,7 @@ npx -y @chrome-agent-bridge/mcp-server --help
 
 ---
 
-## 🧱 技术栈
+## 技术栈
 
 - **TypeScript** — 全栈统一类型，跨包共享类型定义
 - **MCP SDK** (`@modelcontextprotocol/sdk`) — Model Context Protocol 集成
@@ -508,6 +508,6 @@ npx -y @chrome-agent-bridge/mcp-server --help
 - **Vitest + fast-check** — 单元测试 + 属性测试
 - **pnpm workspaces** — Monorepo 包管理
 
-## 📄 License
+## License
 
 MIT
