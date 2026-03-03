@@ -1,0 +1,27 @@
+{
+  "name": "@chrome-agent-bridge/shared",
+  "version": "0.1.1",
+  "private": false,
+  "description": "Shared TypeScript type definitions for Chrome-Agent Bridge",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "test": "vitest --run"
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/user/chrome-agent-bridge",
+    "directory": "packages/shared"
+  },
+  "keywords": [
+    "chrome-agent-bridge",
+    "mcp",
+    "types"
+  ]
+}

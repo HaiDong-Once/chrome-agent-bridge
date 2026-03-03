@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chrome-Agent Bridge</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="container">
+    <h1 class="title">Chrome-Agent Bridge</h1>
+
+    <div class="status-section">
+      <div class="status-row">
+        <span id="status-indicator" class="status-indicator offline"></span>
+        <span id="status-text" class="status-text">检测中...</span>
+      </div>
+    </div>
+
+    <button id="toggle-btn" class="toggle-btn">开始选择</button>
+
+    <div id="result-section" class="result-section hidden">
+      <span id="result-text" class="result-text"></span>
+    </div>
+  </div>
+
+  <script type="module" src="popup.js"></script>
+</body>
+</html>

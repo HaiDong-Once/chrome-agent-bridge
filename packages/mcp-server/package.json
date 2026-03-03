@@ -1,0 +1,40 @@
+{
+  "name": "@chrome-agent-bridge/mcp-server",
+  "version": "0.1.2",
+  "private": false,
+  "description": "MCP Server for Chrome-Agent Bridge — capture web elements and expose them to AI Agent IDEs",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "bin": {
+    "chrome-agent-bridge": "dist/index.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "test": "vitest --run"
+  },
+  "dependencies": {
+    "@chrome-agent-bridge/shared": "workspace:*",
+    "@modelcontextprotocol/sdk": "^1.27.1",
+    "zod": "^4.3.6"
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/user/chrome-agent-bridge",
+    "directory": "packages/mcp-server"
+  },
+  "keywords": [
+    "mcp",
+    "chrome",
+    "agent",
+    "cursor",
+    "kiro",
+    "web-element",
+    "capture"
+  ]
+}

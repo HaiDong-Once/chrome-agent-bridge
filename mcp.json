@@ -1,0 +1,10 @@
+{
+  "mcpServers": {
+    "chrome-agent-bridge": {
+      "command": "node",
+      "args": ["packages/mcp-server/dist/index.js"],
+      "disabled": false,
+      "autoApprove": []
+    }
+  }
+}
