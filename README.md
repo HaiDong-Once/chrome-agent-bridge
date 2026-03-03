@@ -535,3 +535,7 @@ npx -y @chrome-agent-bridge/mcp-server --help
 ## License
 
 MIT
+
+## 关键词
+
+Chrome Extension, MCP, Model Context Protocol, AI Agent, Cursor, Kiro, Web Scraping, DOM Capture, CSS Extraction, Browser Automation, Developer Tools, TypeScript, Node.js, Manifest V3, IDE Integration, AI Programming Assistant, Element Selector, Screenshot Capture, HTML Extraction, Style Inspector
