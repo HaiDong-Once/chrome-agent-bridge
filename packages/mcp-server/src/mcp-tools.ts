@@ -1,6 +1,6 @@
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { z } from 'zod';
-import type { DataStore } from './data-store.js';
+import type { CapturedElementData, CapturedElementSummary } from '@chrome-agent-bridge/shared';
 
 const NO_DATA_MSG = '当前无已采集的元素数据，请先在浏览器中选择元素';
 
@@ -12,14 +12,27 @@ function notFoundMsg(id: string): string {
  * Register all MCP tools on the given McpServer instance.
  * Tools read from the shared DataStore.
  */
-export function registerTools(server: McpServer, dataStore: DataStore): void {
+/**
+ * Common interface for data access — works with both local DataStore and RemoteDataStore.
+ */
+export interface DataReader {
+  getById(id: string): CapturedElementData | null | Promise<CapturedElementData | null>;
+  getLatest(): CapturedElementData | null | Promise<CapturedElementData | null>;
+  list(): CapturedElementSummary[] | Promise<CapturedElementSummary[]>;
+}
+
+/**
+ * Register all MCP tools on the given McpServer instance.
+ * Tools read from the shared DataReader (local or remote).
+ */
+export function registerTools(server: McpServer, dataStore: DataReader): void {
   // get_selected_element: return full CapturedElementData + screenshot as image
   server.tool(
     'get_selected_element',
     '获取最近一次或指定 ID 的已采集元素完整信息（HTML、CSS、元数据），同时返回元素截图',
     { id: z.optional(z.string()) },
     async ({ id }) => {
-      const data = id ? dataStore.getById(id) : dataStore.getLatest();
+      const data = id ? await dataStore.getById(id) : await dataStore.getLatest();
       if (!data) {
         return {
           content: [{ type: 'text' as const, text: id ? notFoundMsg(id) : NO_DATA_MSG }],
@@ -52,7 +65,7 @@ export function registerTools(server: McpServer, dataStore: DataStore): void {
     '获取最近一次或指定 ID 的元素截图（Base64 JPEG）',
     { id: z.optional(z.string()) },
     async ({ id }) => {
-      const data = id ? dataStore.getById(id) : dataStore.getLatest();
+      const data = id ? await dataStore.getById(id) : await dataStore.getLatest();
       if (!data) {
         return {
           content: [{ type: 'text' as const, text: id ? notFoundMsg(id) : NO_DATA_MSG }],
@@ -75,7 +88,7 @@ export function registerTools(server: McpServer, dataStore: DataStore): void {
     '获取最近一次或指定 ID 的元素 CSS 样式详情（计算样式和匹配规则）',
     { id: z.optional(z.string()) },
     async ({ id }) => {
-      const data = id ? dataStore.getById(id) : dataStore.getLatest();
+      const data = id ? await dataStore.getById(id) : await dataStore.getLatest();
       if (!data) {
         return {
           content: [{ type: 'text' as const, text: id ? notFoundMsg(id) : NO_DATA_MSG }],
@@ -92,7 +105,7 @@ export function registerTools(server: McpServer, dataStore: DataStore): void {
     'list_captured_elements',
     '列出所有已采集元素的摘要列表',
     async () => {
-      const summaries = dataStore.list();
+      const summaries = await dataStore.list();
       if (summaries.length === 0) {
         return {
           content: [{ type: 'text' as const, text: NO_DATA_MSG }],

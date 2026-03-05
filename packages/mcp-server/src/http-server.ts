@@ -64,6 +64,24 @@ export class HttpServer {
       return;
     }
 
+    if (req.method === 'GET' && url === '/data/latest') {
+      const data = this.dataStore.getLatest();
+      this.sendJson(res, data ? 200 : 404, data ?? { error: 'No data' });
+      return;
+    }
+
+    if (req.method === 'GET' && url.startsWith('/data/id/')) {
+      const id = url.slice('/data/id/'.length);
+      const data = this.dataStore.getById(id);
+      this.sendJson(res, data ? 200 : 404, data ?? { error: 'Not found' });
+      return;
+    }
+
+    if (req.method === 'GET' && url === '/data/list') {
+      this.sendJson(res, 200, this.dataStore.list());
+      return;
+    }
+
     if (req.method === 'POST' && url === '/capture') {
       this.readBody(req)
         .then((body) => this.handleCapture(body))

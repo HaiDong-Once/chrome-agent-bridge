@@ -468,6 +468,7 @@ async function checkServerStatus(): Promise<void> {
 
 function setPanelOnline(online: boolean): void {
   if (panelStatusDot) {
+    panelStatusDot.classList.remove('checking');
     panelStatusDot.classList.toggle('online', online);
   }
   if (panelStatusText) {

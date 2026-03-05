@@ -532,6 +532,22 @@ npx -y @chrome-agent-bridge/mcp-server --help
 - **Vitest + fast-check** — 单元测试 + 属性测试
 - **pnpm workspaces** — Monorepo 包管理
 
+## 更新日志
+
+### v0.1.2
+
+**MCP Server — 端口管理优化**
+
+- 启动时自动检测端口占用，如果是旧的残留进程会自动终止并接管
+- 注册 SIGTERM/SIGINT/SIGHUP 信号处理，进程退出时优雅释放端口
+- 新增 `/data/latest`、`/data/id/:id`、`/data/list` 内部数据接口，支持客户端模式读取数据
+
+**Chrome 扩展 — Bug 修复**
+
+- 修复浮动面板状态指示器在线状态样式被 `checking` 状态覆盖的问题，绿色在线状态现在能正确显示
+
+---
+
 ## License
 
 MIT

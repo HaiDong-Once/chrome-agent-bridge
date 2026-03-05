@@ -1,6 +1,6 @@
 {
   "name": "@chrome-agent-bridge/mcp-server",
-  "version": "0.1.2",
+  "version": "0.1.5",
   "private": false,
   "description": "MCP Server for Chrome-Agent Bridge — capture web elements and expose them to AI Agent IDEs",
   "license": "MIT",
@@ -15,7 +15,7 @@
     "test": "vitest --run"
   },
   "dependencies": {
-    "@chrome-agent-bridge/shared": "workspace:*",
+    "@chrome-agent-bridge/shared": "^0.1.1",
     "@modelcontextprotocol/sdk": "^1.27.1",
     "zod": "^4.3.6"
   },
