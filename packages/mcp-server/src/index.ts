@@ -6,30 +6,27 @@ import { HttpServer } from './http-server.js';
 import { RemoteDataStore } from './remote-data-store.js';
 import { registerTools } from './mcp-tools.js';
 import type { DataReader } from './mcp-tools.js';
-import { pingServer, killProcessOnPort } from './port-manager.js';
+import { pingServer } from './port-manager.js';
 
 const HTTP_PORT = 19816;
-const RETRY_DELAY = 1500;
-
-function sleep(ms: number): Promise<void> {
-  return new Promise((resolve) => setTimeout(resolve, ms));
-}
 
 /**
  * Try to start the HTTP Server. Returns the DataReader to use for MCP tools.
  *
  * Strategy:
- * 1. Try to bind the port directly.
+ * 1. Try to bind the port directly → become the "server" instance.
  * 2. If EADDRINUSE, ping the existing server:
- *    - If it's our old process → kill it, wait, retry binding.
- *    - If it's our active process (another Cursor window) → enter client mode, use RemoteDataStore.
+ *    - If it's our service (alive & ours) → enter client mode, use RemoteDataStore.
  *    - If it's not ours → report error.
+ *
+ * This allows multiple IDE windows to share a single HTTP Server.
+ * The first window owns the server; subsequent windows proxy reads through it.
  */
 async function startHttpServer(): Promise<{ dataReader: DataReader; httpServer: HttpServer | null }> {
   const dataStore = new DataStore();
   const httpServer = new HttpServer(dataStore);
 
-  // First attempt
+  // First attempt — try to own the port
   try {
     await httpServer.start(HTTP_PORT);
     process.stderr.write(`[chrome-agent-bridge] HTTP Server 启动成功，端口 ${HTTP_PORT}\n`);
@@ -42,33 +39,19 @@ async function startHttpServer(): Promise<{ dataReader: DataReader; httpServer: 
   process.stderr.write(`[chrome-agent-bridge] 端口 ${HTTP_PORT} 已被占用，正在检测...\n`);
   const ping = await pingServer(HTTP_PORT);
 
-  if (!ping.alive || !ping.isOurs) {
-    // Not our service — can't proceed
+  if (ping.alive && ping.isOurs) {
+    // Another instance of our service is running — enter client mode
     process.stderr.write(
-      `[chrome-agent-bridge] 错误: 端口 ${HTTP_PORT} 被其他程序占用，请手动释放后重试。\n`,
+      `[chrome-agent-bridge] 检测到已有实例运行，进入客户端模式（共享 HTTP Server）\n`,
     );
-    process.exit(1);
+    return { dataReader: new RemoteDataStore(HTTP_PORT), httpServer: null };
   }
 
-  // It's our service. Try to kill the old process and take over.
-  process.stderr.write(`[chrome-agent-bridge] 检测到旧进程，尝试终止并接管...\n`);
-  killProcessOnPort(HTTP_PORT);
-  await sleep(RETRY_DELAY);
-
-  // Retry binding after killing old process
-  try {
-    await httpServer.start(HTTP_PORT);
-    process.stderr.write(`[chrome-agent-bridge] HTTP Server 启动成功（已接管端口 ${HTTP_PORT}）\n`);
-    return { dataReader: dataStore, httpServer };
-  } catch (retryErr: unknown) {
-    if ((retryErr as NodeJS.ErrnoException).code !== 'EADDRINUSE') throw retryErr;
-  }
-
-  // Still in use — likely another active Cursor window. Enter client mode.
+  // Not our service or not responding — can't proceed
   process.stderr.write(
-    `[chrome-agent-bridge] 另一个实例正在运行，进入客户端模式（共享 HTTP Server）\n`,
+    `[chrome-agent-bridge] 错误: 端口 ${HTTP_PORT} 被其他程序占用，请手动释放后重试。\n`,
   );
-  return { dataReader: new RemoteDataStore(HTTP_PORT), httpServer: null };
+  process.exit(1);
 }
 
 async function main(): Promise<void> {

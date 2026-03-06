@@ -156,7 +156,7 @@ MCP Server 由 IDE 自动管理，不需要手动启动。你只需要告诉 IDE
 <details>
 <summary><strong>方式二：下载到本地，使用本地路径</strong></summary>
 
-1. 从仓库根目录下载 [`mcp-server-v0.1.2.zip`](https://github.com/HaiDong-Once/chrome-agent-bridge/blob/main/mcp-server-v0.1.2.zip)
+1. 从仓库根目录下载 [`mcp-server-v0.1.5.zip`](https://github.com/HaiDong-Once/chrome-agent-bridge/blob/main/mcp-server-v0.1.5.zip)
 2. 解压到本地任意目录（如 `~/chrome-agent-bridge-server/`）
 3. 在解压目录中安装依赖：
 

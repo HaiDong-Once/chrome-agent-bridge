@@ -36,23 +36,30 @@ export function pingServer(port: number): Promise<PingResult> {
 }
 
 /**
- * Kill the process occupying the given port.
+ * Kill the process occupying the given port (LISTEN state only).
+ * Excludes the current process to avoid self-termination.
  * Returns true if a process was found and killed.
  */
 export function killProcessOnPort(port: number): boolean {
+  const selfPid = process.pid;
   try {
     const platform = process.platform;
     if (platform === 'win32') {
       const output = execSync(`netstat -ano | findstr :${port} | findstr LISTENING`, { encoding: 'utf-8' });
       const pid = output.trim().split(/\s+/).pop();
-      if (pid && /^\d+$/.test(pid)) {
+      if (pid && /^\d+$/.test(pid) && Number(pid) !== selfPid) {
         execSync(`taskkill /PID ${pid} /F`, { encoding: 'utf-8' });
         return true;
       }
     } else {
-      // macOS / Linux
-      const output = execSync(`lsof -ti :${port}`, { encoding: 'utf-8' });
-      const pids = output.trim().split('\n').filter(Boolean);
+      // macOS / Linux — only match processes in LISTEN state to avoid killing
+      // ourselves (we may have a transient connection from the ping request).
+      const output = execSync(`lsof -ti :${port} -sTCP:LISTEN`, { encoding: 'utf-8' });
+      const pids = output
+        .trim()
+        .split('\n')
+        .filter(Boolean)
+        .filter((pid) => Number(pid) !== selfPid);
       for (const pid of pids) {
         try { process.kill(Number(pid), 'SIGTERM'); } catch { /* already dead */ }
       }

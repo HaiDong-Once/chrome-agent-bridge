@@ -180,7 +180,7 @@ MCP Server 由 IDE 自动管理，不需要手动启动。你只需要告诉 IDE
 <details>
 <summary><strong>方式二：下载到本地，使用本地路径</strong></summary>
 
-1. 从仓库根目录下载 [`mcp-server-v0.1.2.zip`](https://github.com/HaiDong-Once/chrome-agent-bridge/blob/main/mcp-server-v0.1.2.zip)
+1. 从仓库根目录下载 [`mcp-server-v0.1.5.zip`](https://github.com/HaiDong-Once/chrome-agent-bridge/blob/main/mcp-server-v0.1.5.zip)
 2. 解压到本地任意目录（如 `~/chrome-agent-bridge-server/`）
 3. 在解压目录中安装依赖：
 
@@ -533,6 +533,14 @@ npx -y @chrome-agent-bridge/mcp-server --help
 - **pnpm workspaces** — Monorepo 包管理
 
 ## 更新日志
+
+### v0.1.6
+
+**MCP Server — 多窗口共享支持**
+
+- 支持多个 IDE 窗口同时连接：第一个窗口启动 HTTP Server，后续窗口自动进入客户端模式共享同一个 HTTP Server
+- 修复 `killProcessOnPort` 误杀自身进程的问题：`lsof` 命令增加 `-sTCP:LISTEN` 过滤，并排除当前进程 PID
+- 不再强制终止已有实例，避免新窗口启动导致旧窗口 MCP 断开
 
 ### v0.1.2
 

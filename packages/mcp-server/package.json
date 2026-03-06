@@ -1,6 +1,6 @@
 {
   "name": "@chrome-agent-bridge/mcp-server",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "private": false,
   "description": "MCP Server for Chrome-Agent Bridge — capture web elements and expose them to AI Agent IDEs",
   "license": "MIT",
